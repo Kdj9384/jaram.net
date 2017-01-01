@@ -21,13 +21,11 @@ class PostListView(TemplateView):
         except ObjectDoesNotExist:
             Board(name=category[eng_name], eng_name=eng_name).save()
             return redirect('/main/?warning=잘못된 접근입니다.')
-        
-	if board.usable_group and not request.user.groups.filter(
-            pk__in=board.usable_group.values_list('pk', flat=True)).exists():
-    
+
+        if board.usable_group and not request.user.groups.filter(
+                pk__in=board.usable_group.values_list('pk', flat=True)).exists():
             if not (user.is_superuser or user.is_staff):
                 return redirect('/main/?warning=권한이 없습니다.')
-
 
         easy_paginator(board.post_set.order_by('-write_date').all(), request.GET.get('page', 1),
                        each_data_count=8, save_to=response)
@@ -51,7 +49,6 @@ class PostView(TemplateView):
         except ObjectDoesNotExist:
             return redirect('/main/?warning=잘못된 접근입니다.')
 
-
         post = board.post_set.filter(pk=kwargs.get('id'))
 
         if not post.exists():
@@ -60,17 +57,17 @@ class PostView(TemplateView):
         if not request.user == post.writer:
             post.hit += 1
             post.save()
-        
-        #   첨부파일 경로 편집
+
+        # 첨부파일 경로 편집
         if post.attachment:
             response['attachment_name'] = post.attachment.name.split("/")[2]
-        
-	if board.usable_group and not request.user.groups.filter(
-            pk__in=board.usable_group.values_list('pk', flat=True)).exists():
-    
+
+        if board.usable_group and not request.user.groups.filter(
+                pk__in=board.usable_group.values_list('pk', flat=True)).exists():
+
             if not (user.is_superuser or user.is_staff):
                 return redirect('/main/?warning=권한이 없습니다.')
-        
+
         response['post'] = post
         response['comments'] = board.comment_set.filter(post_id=kwargs.get('id')).order_by('-write_date').all()
         response['header_title'] = board.name
@@ -87,8 +84,8 @@ class PostView(TemplateView):
             return redirect('/main/?warning=잘못된 접근입니다.')
 
         if board.usable_group and not request.user.groups.filter(
-            pk__in=board.usable_group.values_list('pk', flat=True)).exists():
-    
+                pk__in=board.usable_group.values_list('pk', flat=True)).exists():
+
             if not (user.is_superuser or user.is_staff):
                 return redirect('/main/?warning=권한이 없습니다.')
 
@@ -183,8 +180,8 @@ class PostModifyView(TemplateView):
             return redirect('/main/?warning=잘못된 접근입니다.')
 
         if board.usable_group and not request.user.groups.filter(
-            pk__in=board.usable_group.values_list('pk', flat=True)).exists():
-    
+                pk__in=board.usable_group.values_list('pk', flat=True)).exists():
+
             if not (user.is_superuser or user.is_staff):
                 return redirect('/main/?warning=권한이 없습니다.')
 
@@ -215,8 +212,8 @@ class PostModifyView(TemplateView):
             return redirect('/board/write?warning=입력된 정보가 올바르지 않습니다.&board_name=' + board_name)
 
         if board.usable_group and not request.user.groups.filter(
-            pk__in=board.usable_group.values_list('pk', flat=True)).exists():
-    
+                pk__in=board.usable_group.values_list('pk', flat=True)).exists():
+
             if not (user.is_superuser or user.is_staff):
                 return redirect('/main/?warning=권한이 없습니다.')
 
@@ -253,8 +250,8 @@ class PostDeleteView(TemplateView):
             return redirect('/main/?warning=잘못된 접근입니다.')
 
         if board.usable_group and not request.user.groups.filter(
-            pk__in=board.usable_group.values_list('pk', flat=True)).exists():
-    
+                pk__in=board.usable_group.values_list('pk', flat=True)).exists():
+
             if not (user.is_superuser or user.is_staff):
                 return redirect('/main/?warning=권한이 없습니다.')
 

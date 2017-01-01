@@ -39,7 +39,7 @@ THIRD_PARTY_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'django_cleanup',
-    'mod_wsgi.server'
+    # 'mod_wsgi.server'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + JARAM_APPS + THIRD_PARTY_APPS

@@ -1,7 +1,6 @@
 import datetime
 
 from django.db import models
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from main.models import Member
 
@@ -22,9 +21,9 @@ class EventGroup(models.Model):
 class Event(models.Model):
     writer = models.ForeignKey(Member)
     category = models.ForeignKey(EventGroup)
-    start_date = models.DateTimeField(_('시작 날짜'), null=False, blank=False, default=timezone.now)
+    start_date = models.DateTimeField(_('시작 날짜'), null=False, blank=False, default=datetime.datetime.now)
     end_date = models.DateTimeField(_('종료 날짜'), null=False, blank=False,
-                                    default=timezone.now() + datetime.timedelta(hours=1))
+                                    default=datetime.datetime.now() + datetime.timedelta(hours=1))
     title = models.CharField(_('제목'), max_length=255, null=False, blank=False)
     description = models.TextField(_('내용'), null=False, blank=False)
     all_day = models.BooleanField(_('하루종일'), default=False)

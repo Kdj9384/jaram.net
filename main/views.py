@@ -62,9 +62,9 @@ class ProfileView(TemplateView):
             return redirect('/profile?error=이메일을 입력해주세요')
 
         try:
-            validate_email(data.get('Email'))
+            validate_email(data.get('email'))
         except ValidationError:
-            return redirect('/sign_up?error=이메일을 제대로 입력하십시오.')
+            return redirect('/profile?error=이메일을 제대로 입력하십시오.')
 
         user = request.user
 
@@ -73,7 +73,7 @@ class ProfileView(TemplateView):
         user.sns = data.get('sns', '')
         user.save()
 
-        return redirect('profile')
+        return redirect('/profile?success=수정 완료')
 
 
 class SignUpView(TemplateView):

@@ -83,7 +83,7 @@
       </div>
       {% if board.eng_name == 'notice' %}
         <div class="ui checkbox">
-          <input type="checkbox" name="emphasis" value="{% if post %}{{ post.emphasis }}{% endif %}">
+          <input type="checkbox" name="emphasis" {% if post %}value="{{ post.emphasis }}"{% endif %}>
           <label>중요</label>
         </div>
       {% endif %}
